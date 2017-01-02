@@ -20,6 +20,10 @@ enum Color : String {
   }
 }
 
+enum CodeError : Error {
+  case invalidPartsCount
+}
+
 struct Code : CustomStringConvertible {
   let parts : [Color]
 
@@ -32,8 +36,14 @@ struct Code : CustomStringConvertible {
     return String(d.characters.prefix(c-2)) + ")"
   }
 
+  public init(_ parts : [Color]) throws {
+    if parts.count != 4 { throw CodeError.invalidPartsCount }
+    self.parts = parts
+  }
+
   static func generate() -> Code {
-    return Code(parts:[
+    // we _know_ that this will _not_ throw ;-)
+    return try! Code([
       Color.randomColor(),
       Color.randomColor(),
       Color.randomColor(),
