@@ -149,6 +149,24 @@ class CodeTests: XCTestCase {
     XCTAssertEqual(Color(6), .green )
     XCTAssertEqual(Color(7), .grey  )
   }
+
+  func testCodeIndexBoundaries() {
+    do {
+      let _ = try Code(atIndex: 4096)
+      XCTFail("Should have thrown.")
+    } catch let error as CodeError {
+      XCTAssertEqual(error, .invalidCodeIndex)
+    } catch {
+      XCTFail("Invalid Error.")
+    }
+  }
+
+  func testCodeByIndex() {
+    XCTAssertEqual(
+      try! Code(atIndex: 4093),
+      try! Code([.grey, .grey, .grey, .blue])
+    )
+  }
 }
 
 #if os(Linux)
@@ -169,6 +187,8 @@ extension CodeTests {
       ( "testCodeComparisonMixedResults",   testCodeComparisonMixedResults   ),
       ( "testStringBasedColorInit",         testStringBasedColorInit         ),
       ( "testIndexBasedColorInit",          testIndexBasedColorInit          ),
+      ( "testCodeIndexBoundaries",          testCodeIndexBoundaries          ),
+      ( "testCodeByIndex",                  testCodeByIndex                  ),
 		]
 	}
 }

@@ -34,6 +34,7 @@ enum Color : String {
 enum CodeError : Error {
   case invalidPartsCount
   case invalidComparisonParameters
+  case invalidCodeIndex
 }
 
 struct Code : CustomStringConvertible, Equatable, Collection {
@@ -61,6 +62,19 @@ struct Code : CustomStringConvertible, Equatable, Collection {
       Color.randomColor(),
       Color.randomColor()
     ])
+  }
+
+  public init(atIndex index:UInt16) throws {
+    if !(0..<0o10000).contains(index) {
+      throw CodeError.invalidCodeIndex
+    }
+
+    let octal  = Int(String(index, radix: 8))
+    let colors = String(describing:octal!).characters.map {
+      return Color(Int(String($0))!)!
+    }
+
+    try! self.init(colors)
   }
 
   static func ==(lhs:Code, rhs:Code) -> Bool {
