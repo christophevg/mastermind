@@ -18,6 +18,17 @@ enum Color : String {
     let random = Int(arc4random_uniform(8))
     return Color.cases[random]
   }
+
+  init?(_ index: Int) {
+    if !(0...8).contains(index) {
+      return nil
+    }
+    self = Color.cases[index]
+  }
+
+  init?(_ rawValue: String) {
+    self.init(rawValue:rawValue)
+  }
 }
 
 enum CodeError : Error {

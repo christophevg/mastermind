@@ -127,6 +127,28 @@ class CodeTests: XCTestCase {
       expectedMisplaced: 2
     )
   }
+
+  func testStringBasedColorInit() {
+    XCTAssertEqual(Color("White"),  .white )
+    XCTAssertEqual(Color("Yellow"), .yellow)
+    XCTAssertEqual(Color("Orange"), .orange)
+    XCTAssertEqual(Color("Red"),    .red   )
+    XCTAssertEqual(Color("Pink"),   .pink  )
+    XCTAssertEqual(Color("Blue"),   .blue  )
+    XCTAssertEqual(Color("Green"),  .green )
+    XCTAssertEqual(Color("Grey"),   .grey  )
+  }
+
+  func testIndexBasedColorInit() {
+    XCTAssertEqual(Color(0), .white )
+    XCTAssertEqual(Color(1), .yellow)
+    XCTAssertEqual(Color(2), .orange)
+    XCTAssertEqual(Color(3), .red   )
+    XCTAssertEqual(Color(4), .pink  )
+    XCTAssertEqual(Color(5), .blue  )
+    XCTAssertEqual(Color(6), .green )
+    XCTAssertEqual(Color(7), .grey  )
+  }
 }
 
 #if os(Linux)
@@ -145,6 +167,8 @@ extension CodeTests {
       ( "testCodeComparisonNothingOkay",    testCodeComparisonNothingOkay    ),
       ( "testCodeComparisonEverythingOkay", testCodeComparisonEverythingOkay ),
       ( "testCodeComparisonMixedResults",   testCodeComparisonMixedResults   ),
+      ( "testStringBasedColorInit",         testStringBasedColorInit         ),
+      ( "testIndexBasedColorInit",          testIndexBasedColorInit          ),
 		]
 	}
 }
