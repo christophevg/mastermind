@@ -8,3 +8,6 @@ $(TARGET): Sources/*
 
 run: $(TARGET)
 	@$<
+
+test:
+	@swift test
