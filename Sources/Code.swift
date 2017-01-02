@@ -40,7 +40,7 @@ struct CodeComparison {
 }
 
 struct Code : CustomStringConvertible, Equatable {
-  let parts : [Color]
+  private let parts : [Color]
 
   var description : String {
     var d =  "Code("
@@ -68,5 +68,9 @@ struct Code : CustomStringConvertible, Equatable {
 
   static func ==(lhs:Code, rhs:Code) -> Bool {
     return lhs.parts == rhs.parts
+  }
+
+  subscript(index: Int) -> Color {
+    return parts[index]
   }
 }

@@ -73,6 +73,14 @@ class CodeTests: XCTestCase {
     self.createCodeComparisonWithInvalidParameters(correct: 3, misplaced: 3)
   }
 
+  func testCodeSubscripting() {
+    let code = try! Code([.red, .green, .blue, .yellow])
+    XCTAssertEqual(code[0], .red   )
+    XCTAssertEqual(code[1], .green )
+    XCTAssertEqual(code[2], .blue  )
+    XCTAssertEqual(code[3], .yellow)
+  }
+
   static var allTests : [(String, (CodeTests) -> () throws -> Void)] {
     return [
       ( "testDescription",                 testDescription                 ),
@@ -82,6 +90,7 @@ class CodeTests: XCTestCase {
       ( "testNotEqualCodes",               testNotEqualCodes               ),
       ( "testValidComparisonBoundaries",   testValidComparisonBoundaries   ),
       ( "testInvalidComparisonBoundaries", testInvalidComparisonBoundaries ),
+      ( "testCodeSubscripting",            testCodeSubscripting            ),
     ]
   }
 }
