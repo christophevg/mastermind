@@ -41,13 +41,47 @@ class CodeTests: XCTestCase {
     XCTAssertNotEqual(code1, code2)
   }
 
+  func testValidComparisonBoundaries() {
+    // lower boundary
+    let _ = try! CodeComparison(correct: 0, misplaced: 0)
+    // some in betweens
+    let _ = try! CodeComparison(correct: 1, misplaced: 3)
+    let _ = try! CodeComparison(correct: 3, misplaced: 1)
+    // extremes
+    let _ = try! CodeComparison(correct: 4, misplaced: 0)
+    let _ = try! CodeComparison(correct: 0, misplaced: 4)
+  }
+
+  private func createCodeComparisonWithInvalidParameters(
+    correct: UInt8, misplaced: UInt8
+  ) {
+    do {
+      let _ = try CodeComparison(correct: correct, misplaced: misplaced)
+      XCTFail("Should have thrown.")
+    } catch let error as CodeError {
+      XCTAssertEqual(error, .invalidComparisonParameters)
+    } catch {
+      XCTFail("Invalid Error.")
+    }
+  }
+
+  func testInvalidComparisonBoundaries() {
+    // too large
+    self.createCodeComparisonWithInvalidParameters(correct: 5, misplaced: 0)
+    self.createCodeComparisonWithInvalidParameters(correct: 0, misplaced: 5)
+    // combination too large
+    self.createCodeComparisonWithInvalidParameters(correct: 3, misplaced: 3)
+  }
+
   static var allTests : [(String, (CodeTests) -> () throws -> Void)] {
     return [
-      ( "testDescription",   testDescription   ),
-      ( "testTooFewParts",   testTooFewParts   ),
-      ( "testTooManyParts",  testTooManyParts  ),
-      ( "testEqualCodes",    testEqualCodes    ),
-      ( "testNotEqualCodes", testNotEqualCodes ),
+      ( "testDescription",                 testDescription                 ),
+      ( "testTooFewParts",                 testTooFewParts                 ),
+      ( "testTooManyParts",                testTooManyParts                ),
+      ( "testEqualCodes",                  testEqualCodes                  ),
+      ( "testNotEqualCodes",               testNotEqualCodes               ),
+      ( "testValidComparisonBoundaries",   testValidComparisonBoundaries   ),
+      ( "testInvalidComparisonBoundaries", testInvalidComparisonBoundaries ),
     ]
   }
 }

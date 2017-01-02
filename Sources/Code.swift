@@ -22,6 +22,21 @@ enum Color : String {
 
 enum CodeError : Error {
   case invalidPartsCount
+  case invalidComparisonParameters
+}
+
+struct CodeComparison {
+  let correct   : UInt8
+  let misplaced : UInt8
+
+  public init(correct: UInt8, misplaced:UInt8) throws {
+    // check that misplaced + correct <= 4
+    if correct + misplaced > 4 {
+      throw CodeError.invalidComparisonParameters
+    }
+    self.correct   = correct
+    self.misplaced = misplaced
+  }
 }
 
 struct Code : CustomStringConvertible, Equatable {
