@@ -24,7 +24,7 @@ enum CodeError : Error {
   case invalidPartsCount
 }
 
-struct Code : CustomStringConvertible {
+struct Code : CustomStringConvertible, Equatable {
   let parts : [Color]
 
   var description : String {
@@ -49,5 +49,9 @@ struct Code : CustomStringConvertible {
       Color.randomColor(),
       Color.randomColor()
     ])
+  }
+
+  static func ==(lhs:Code, rhs:Code) -> Bool {
+    return lhs.parts == rhs.parts
   }
 }

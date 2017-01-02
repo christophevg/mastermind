@@ -32,11 +32,25 @@ class CodeTests: XCTestCase {
     }
   }
 
+  func testEqualCodes() {
+    let code1 = try! Code([.red, .green, .blue, .yellow])
+    let code2 = try! Code([.red, .green, .blue, .yellow])
+    XCTAssertEqual(code1, code2)
+  }
+
+  func testNotEqualCodes() {
+    let code1 = try! Code([.red, .green, .blue, .yellow])
+    let code2 = try! Code([.blue, .green, .blue, .yellow])
+    XCTAssertNotEqual(code1, code2)
+  }
+
   static var allTests : [(String, (CodeTests) -> () throws -> Void)] {
     return [
-      ( "testDescription",  testDescription  ),
-      ( "testTooFewParts",  testTooFewParts  ),
-      ( "testTooManyParts", testTooManyParts ),
+      ( "testDescription",   testDescription   ),
+      ( "testTooFewParts",   testTooFewParts   ),
+      ( "testTooManyParts",  testTooManyParts  ),
+      ( "testEqualCodes",    testEqualCodes    ),
+      ( "testNotEqualCodes", testNotEqualCodes ),
     ]
   }
 }
