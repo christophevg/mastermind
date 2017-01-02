@@ -81,16 +81,71 @@ class CodeTests: XCTestCase {
     XCTAssertEqual(code[3], .yellow)
   }
 
-  static var allTests : [(String, (CodeTests) -> () throws -> Void)] {
-    return [
-      ( "testDescription",                 testDescription                 ),
-      ( "testTooFewParts",                 testTooFewParts                 ),
-      ( "testTooManyParts",                testTooManyParts                ),
-      ( "testEqualCodes",                  testEqualCodes                  ),
-      ( "testNotEqualCodes",               testNotEqualCodes               ),
-      ( "testValidComparisonBoundaries",   testValidComparisonBoundaries   ),
-      ( "testInvalidComparisonBoundaries", testInvalidComparisonBoundaries ),
-      ( "testCodeSubscripting",            testCodeSubscripting            ),
-    ]
+  private func compareCodes(_ lhp:[Color], _ rhp:[Color],
+                            expectedCorrect correct:UInt8,
+                            expectedMisplaced misplaced:UInt8)
+  {
+    let code1 = try! Code(lhp)
+    let code2 = try! Code(rhp)
+    let result = CodeComparison.compare(code1, code2)
+    XCTAssertEqual(result.correct,   correct)
+    XCTAssertEqual(result.misplaced, misplaced)
+  }
+
+  func testCodeComparisonAllMisplaced() {
+    self.compareCodes(
+      [.red, .green, .blue, .yellow],
+      [      .green, .blue, .yellow, .red ],
+      expectedCorrect:   0,
+      expectedMisplaced: 4
+    )
+  }
+
+  func testCodeComparisonNothingOkay() {
+    self.compareCodes(
+      [.red,  .green,  .blue, .yellow],
+      [.pink, .orange, .grey, .white],
+      expectedCorrect:   0,
+      expectedMisplaced: 0
+    )
+  }
+
+  func testCodeComparisonEverythingOkay() {
+    self.compareCodes(
+      [.red,  .green,  .blue, .yellow],
+      [.red,  .green,  .blue, .yellow],
+      expectedCorrect:   4,
+      expectedMisplaced: 0
+    )
+  }
+
+  func testCodeComparisonMixedResults() {
+    self.compareCodes(
+      [.red,  .green,  .blue,   .yellow],
+      [.pink, .green,  .yellow, .blue  ],
+      expectedCorrect:   1,
+      expectedMisplaced: 2
+    )
   }
 }
+
+#if os(Linux)
+extension CodeTests {
+	static var allTests : [(String, CodeTests -> () throws -> Void)] {
+		return [
+      ( "testDescription",                  testDescription                  ),
+      ( "testTooFewParts",                  testTooFewParts                  ),
+      ( "testTooManyParts",                 testTooManyParts                 ),
+      ( "testEqualCodes",                   testEqualCodes                   ),
+      ( "testNotEqualCodes",                testNotEqualCodes                ),
+      ( "testValidComparisonBoundaries",    testValidComparisonBoundaries    ),
+      ( "testInvalidComparisonBoundaries",  testInvalidComparisonBoundaries  ),
+      ( "testCodeSubscripting",             testCodeSubscripting             ),
+      ( "testCodeComparisonAllMisplaced",   testCodeComparisonAllMisplaced   ),
+      ( "testCodeComparisonNothingOkay",    testCodeComparisonNothingOkay    ),
+      ( "testCodeComparisonEverythingOkay", testCodeComparisonEverythingOkay ),
+      ( "testCodeComparisonMixedResults",   testCodeComparisonMixedResults   ),
+		]
+	}
+}
+#endif
