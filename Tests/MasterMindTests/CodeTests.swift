@@ -10,9 +10,9 @@ class CodeTests: XCTestCase {
     XCTAssertEqual(String(describing:code2), "Code(Pink, Orange, White, Grey)")
   }
 
-  func testTooFewParts() {
+  private func createCodeWithInvalidPartsCount(_ parts:[Color]) {
     do {
-      let _ = try Code([.red])
+      let _ = try Code(parts)
       XCTFail("Should have thrown.")
     } catch let error as CodeError {
       XCTAssertEqual(error, .invalidPartsCount)
@@ -21,15 +21,12 @@ class CodeTests: XCTestCase {
     }
   }
 
+  func testTooFewParts() {
+    self.createCodeWithInvalidPartsCount([.red])
+  }
+
   func testTooManyParts() {
-    do {
-      let _ = try Code([.red, .green, .blue, .yellow, .grey])
-      XCTFail("Should have thrown.")
-    } catch let error as CodeError {
-      XCTAssertEqual(error, .invalidPartsCount)
-    } catch {
-      XCTFail("Invalid Error.")
-    }
+    self.createCodeWithInvalidPartsCount([.red, .green, .blue, .yellow, .grey])
   }
 
   func testEqualCodes() {
