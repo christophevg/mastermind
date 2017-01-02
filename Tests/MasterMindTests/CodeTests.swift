@@ -6,6 +6,8 @@ class CodeTests: XCTestCase {
   func testDescription() {
     let code = try! Code([.red, .green, .yellow, .blue])
     XCTAssertEqual(String(describing:code), "Code(Red, Green, Yellow, Blue)")
+    let code2 = try! Code([.pink, .orange, .white, .grey])
+    XCTAssertEqual(String(describing:code2), "Code(Pink, Orange, White, Grey)")
   }
 
   func testTooFewParts() {
