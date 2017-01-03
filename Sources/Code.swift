@@ -107,7 +107,7 @@ extension Sequence where Self.Iterator.Element: Hashable {
   }
 }
 
-struct CodeComparison {
+struct CodeComparison : Equatable, Hashable {
   let correct   : UInt8
   let misplaced : UInt8
 
@@ -136,5 +136,13 @@ struct CodeComparison {
     }
     
     return try! CodeComparison(correct: correct, misplaced: pins - correct)
+  }
+
+  static func ==(lhs:CodeComparison, rhs:CodeComparison) -> Bool {
+    return lhs.correct == rhs.correct && lhs.misplaced == rhs.misplaced
+  }
+
+  var hashValue: Int {
+    return Int(self.correct) * 10 + Int(self.misplaced)
   }
 }

@@ -166,6 +166,24 @@ class CodeTests: XCTestCase {
       try! Code(atIndex: 4093),
       try! Code([.grey, .grey, .grey, .blue])
     )
+    XCTAssertEqual(
+      try! Code(atIndex: 0),
+      try! Code([.white, .white, .white, .white])
+    )
+  }
+
+  func testCodeComparisonEquality() {
+    XCTAssertEqual(
+      try! CodeComparison(correct: 3, misplaced: 1),
+      try! CodeComparison(correct: 3, misplaced: 1)
+    )
+  }
+
+  func testCodeComparisonHashValue() {
+    XCTAssertEqual(
+      try! CodeComparison(correct: 3, misplaced: 1).hashValue,
+      31
+    )
   }
 }
 
