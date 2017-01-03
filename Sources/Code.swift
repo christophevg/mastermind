@@ -70,7 +70,7 @@ struct Code : CustomStringConvertible, Equatable, Collection {
     }
 
     let octal  = Int(String(index, radix: 8))
-    let colors = String(describing:octal!).characters.map {
+    let colors = String(format: "%04d", octal!).characters.map {
       return Color(Int(String($0))!)!
     }
 
