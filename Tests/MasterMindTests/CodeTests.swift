@@ -207,6 +207,8 @@ extension CodeTests {
       ( "testIndexBasedColorInit",          testIndexBasedColorInit          ),
       ( "testCodeIndexBoundaries",          testCodeIndexBoundaries          ),
       ( "testCodeByIndex",                  testCodeByIndex                  ),
+      ( "testCodeComparisonEquality",       testCodeComparisonEquality       ),
+      ( "testCodeComparisonHashValue",      testCodeComparisonHashValue      ),
 		]
 	}
 }
