@@ -1,6 +1,8 @@
 // attempt to implement the Mastermind solver algorithm described by Donald
 // Knuth as described in
 // https://en.wikipedia.org/wiki/Mastermind_(board_game)#Five-guess_algorithm
+// changes
+// - only using remaining set, not all non-tried
 
 import Foundation
 
@@ -17,7 +19,7 @@ var remaining : [Code] = {
   return remaining
 }()
 
-var toTry = remaining;
+// track guesses
 var i = 0
 
 func isCode(_ guess:Code) -> CodeComparison {
@@ -32,9 +34,8 @@ func isCode(_ guess:Code) -> CodeComparison {
 }
 
 // start with a random guess
-let g : Int = Int(arc4random_uniform(UInt32(toTry.count)))
-var guess = toTry[g]
-toTry.remove(at: g)
+let g : Int = Int(arc4random_uniform(UInt32(remaining.count)))
+var guess = remaining[g]
 
 var result = isCode(guess)
 while result.correct != 4 {
@@ -46,18 +47,18 @@ while result.correct != 4 {
   print("   ", remaining.count, "remaining")
   
   // apply MiniMax
-  // for each toTry
+  // for each remaining possible code
   //   take least eliminating CodeComparison (least eliminations == score)
   // track the highest score
   print(">>> selecting best next guess")
-  let best = toTry.reduce((nil, -1, 0)) {
+  let best = remaining.reduce((nil, -1, 0)) {
     (accu: (Code?, Int, Int), guess) in
     var accu = accu
     accu.2 += 1
     let results = remaining.map { CodeComparison.compare($0, guess) }
     let freqs   = results.freq()
     let score   = remaining.count - freqs.values.max()!
-    if score > accu.1 && remaining.contains(guess) {
+    if score > accu.1 {
       print("   ", accu.2, guess, "eliminates at least", score)
       return (guess, score, accu.2)
     }
@@ -65,7 +66,6 @@ while result.correct != 4 {
   }
 
   guess = best.0!
-  toTry = toTry.filter { $0 != guess }
   result = isCode(guess)
 }
 
