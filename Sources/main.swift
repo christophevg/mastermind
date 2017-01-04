@@ -20,7 +20,7 @@ var remaining : [Code] = {
 }()
 
 // track guesses
-var i = 0
+var i = 1
 
 func isCode(_ guess:Code) -> CodeComparison {
   print(">>> guess \(i)", guess)
