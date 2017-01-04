@@ -35,15 +35,14 @@ func isCode(_ guess:Code) -> CodeComparison {
 
 // start with a random guess
 let g : Int = Int(arc4random_uniform(UInt32(remaining.count)))
-var guess = remaining[g]
+var guess : Code? = remaining[g]
+var result = isCode(guess!)
 
-var result = isCode(guess)
 while result.correct != 4 {
-  print(">>> only keeping with ", result, "for", guess)
+
   // only keep the remaining possible codes that have the same result
-  remaining = remaining.filter { 
-    return result == CodeComparison.compare($0, guess)
-  }
+  print(">>> only keeping with ", result, "for", guess!)
+  remaining = remaining.filter { result == CodeComparison.compare($0, guess!) }
   print("   ", remaining.count, "remaining")
   
   // apply MiniMax
@@ -51,22 +50,21 @@ while result.correct != 4 {
   //   take least eliminating CodeComparison (least eliminations == score)
   // track the highest score
   print(">>> selecting best next guess")
-  let best = remaining.reduce((nil, -1, 0)) {
-    (accu: (Code?, Int, Int), guess) in
-    var accu = accu
-    accu.2 += 1
-    let results = remaining.map { CodeComparison.compare($0, guess) }
+  (guess, _, _) = remaining.reduce((nil, -1, 0)) {
+    (best: (code:Code?, score:Int, index:Int), possibleGuess) in
+    let results = remaining.map { CodeComparison.compare($0, possibleGuess) }
     let freqs   = results.freq()
     let score   = remaining.count - freqs.values.max()!
-    if score > accu.1 {
-      print("   ", accu.2, guess, "eliminates at least", score)
-      return (guess, score, accu.2)
+    if score > best.score {
+      print("   ", best.index, possibleGuess, "eliminates at least", score)
+      return (possibleGuess, score, best.index + 1)
     }
-    return accu
+    return (best.code, best.score, best.index + 1)
   }
 
-  guess = best.0!
-  result = isCode(guess)
+  // compute result for newly "guessed" code
+  result = isCode(guess!)
+
 }
 
-print("+++ Cracked code", guess)
+print("+++ Cracked", guess!, "with", result)

@@ -9,51 +9,37 @@ Christophe VG (<contact@christophe.vg>)
 $ time make
 Compile Swift Module 'MasterMind' (2 sources)
 Linking ./.build/debug/MasterMind
-+++ The code to crack is Code(Blue, Orange, Grey, Red)
->>> guess 0 Code(Pink, Orange, Green, Blue)
-    result CodeComparison(correct: 1, misplaced: 1)
->>> only keeping with  CodeComparison(correct: 1, misplaced: 1) for Code(Pink, Orange, Green, Blue)
-    660 remaining
++++ The code to crack is Code(Orange, Yellow, Pink, Orange)
+>>> guess 1 Code(Blue, White, Red, Green)
+    result CodeComparison(correct: 0, misplaced: 0)
+>>> only keeping with  CodeComparison(correct: 0, misplaced: 0) for Code(Blue, White, Red, Green)
+    256 remaining
 >>> selecting best next guess
-    1 Code(White, White, Orange, Blue) eliminates at least 460
-    5 Code(White, Yellow, Orange, Blue) eliminates at least 513
->>> guess 1 Code(White, Yellow, Orange, Blue)
-    result CodeComparison(correct: 0, misplaced: 2)
->>> only keeping with  CodeComparison(correct: 0, misplaced: 2) for Code(White, Yellow, Orange, Blue)
-    141 remaining
+    0 Code(Yellow, Yellow, Yellow, Yellow) eliminates at least 148
+    1 Code(Yellow, Yellow, Yellow, Orange) eliminates at least 205
+    6 Code(Yellow, Yellow, Orange, Pink) eliminates at least 210
+>>> guess 2 Code(Yellow, Yellow, Orange, Pink)
+    result CodeComparison(correct: 1, misplaced: 2)
+>>> only keeping with  CodeComparison(correct: 1, misplaced: 2) for Code(Yellow, Yellow, Orange, Pink)
+    40 remaining
 >>> selecting best next guess
-    1 Code(Yellow, White, Green, Pink) eliminates at least 89
-    2 Code(Yellow, Orange, Yellow, Pink) eliminates at least 108
-    3 Code(Yellow, Orange, Yellow, Green) eliminates at least 113
-    4 Code(Yellow, Orange, Red, Pink) eliminates at least 116
-    43 Code(Red, Orange, White, Green) eliminates at least 118
->>> guess 2 Code(Red, Orange, White, Green)
-    result CodeComparison(correct: 1, misplaced: 1)
->>> only keeping with  CodeComparison(correct: 1, misplaced: 1) for Code(Red, Orange, White, Green)
-    23 remaining
->>> selecting best next guess
-    1 Code(Yellow, Orange, Red, Pink) eliminates at least 13
-    2 Code(Yellow, Orange, Pink, Red) eliminates at least 16
-    4 Code(Orange, Orange, Blue, Red) eliminates at least 19
->>> guess 3 Code(Orange, Orange, Blue, Red)
-    result CodeComparison(correct: 2, misplaced: 1)
->>> only keeping with  CodeComparison(correct: 2, misplaced: 1) for Code(Orange, Orange, Blue, Red)
-    2 remaining
->>> selecting best next guess
-    1 Code(Blue, Orange, Red, Red) eliminates at least 1
->>> guess 4 Code(Blue, Orange, Red, Red)
-    result CodeComparison(correct: 3, misplaced: 0)
->>> only keeping with  CodeComparison(correct: 3, misplaced: 0) for Code(Blue, Orange, Red, Red)
+    0 Code(Yellow, Orange, Yellow, Yellow) eliminates at least 27
+    1 Code(Yellow, Orange, Yellow, Orange) eliminates at least 30
+    2 Code(Yellow, Orange, Yellow, Grey) eliminates at least 32
+    3 Code(Yellow, Orange, Pink, Orange) eliminates at least 34
+>>> guess 3 Code(Yellow, Orange, Pink, Orange)
+    result CodeComparison(correct: 2, misplaced: 2)
+>>> only keeping with  CodeComparison(correct: 2, misplaced: 2) for Code(Yellow, Orange, Pink, Orange)
     1 remaining
 >>> selecting best next guess
-    1 Code(Blue, Orange, Grey, Red) eliminates at least 0
->>> guess 5 Code(Blue, Orange, Grey, Red)
+    0 Code(Orange, Yellow, Pink, Orange) eliminates at least 0
+>>> guess 4 Code(Orange, Yellow, Pink, Orange)
     result CodeComparison(correct: 4, misplaced: 0)
-+++ Cracked code Code(Blue, Orange, Grey, Red)
++++ Cracked Code(Orange, Yellow, Pink, Orange) with CodeComparison(correct: 4, misplaced: 0)
 
-real  0m28.350s
-user  0m26.412s
-sys   0m1.379s
+real  0m5.389s
+user  0m4.260s
+sys   0m0.705s
 ```
 
 ## Running all unit tests
