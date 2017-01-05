@@ -5,9 +5,22 @@ class CodeTests: XCTestCase {
 
   func testDescription() {
     let code = try! Code([.red, .green, .yellow, .blue])
-    XCTAssertEqual(String(describing:code), "Code(Red, Green, Yellow, Blue)")
+    XCTAssertEqual(
+      String(describing:code),
+      "\u{001B}[0;31m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;32m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;33m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;34m\u{25CF}\u{001B}[0;39m"
+    )
+
     let code2 = try! Code([.pink, .orange, .white, .grey])
-    XCTAssertEqual(String(describing:code2), "Code(Pink, Orange, White, Grey)")
+    XCTAssertEqual(
+      String(describing:code2), 
+      "\u{001B}[0;35m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;91m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;97m\u{25CF}\u{001B}[0;39m" + " " +
+      "\u{001B}[0;90m\u{25CF}\u{001B}[0;39m"
+    )
   }
 
   private func createCodeWithInvalidPartsCount(_ parts:[Color]) {
@@ -129,14 +142,14 @@ class CodeTests: XCTestCase {
   }
 
   func testStringBasedColorInit() {
-    XCTAssertEqual(Color("White"),  .white )
-    XCTAssertEqual(Color("Yellow"), .yellow)
-    XCTAssertEqual(Color("Orange"), .orange)
-    XCTAssertEqual(Color("Red"),    .red   )
-    XCTAssertEqual(Color("Pink"),   .pink  )
-    XCTAssertEqual(Color("Blue"),   .blue  )
-    XCTAssertEqual(Color("Green"),  .green )
-    XCTAssertEqual(Color("Grey"),   .grey  )
+    XCTAssertEqual(try! Color("White"),  .white )
+    XCTAssertEqual(try! Color("Yellow"), .yellow)
+    XCTAssertEqual(try! Color("Orange"), .orange)
+    XCTAssertEqual(try! Color("Red"),    .red   )
+    XCTAssertEqual(try! Color("Pink"),   .pink  )
+    XCTAssertEqual(try! Color("Blue"),   .blue  )
+    XCTAssertEqual(try! Color("Green"),  .green )
+    XCTAssertEqual(try! Color("Grey"),   .grey  )
   }
 
   func testIndexBasedColorInit() {

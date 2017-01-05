@@ -1,19 +1,34 @@
 import Foundation  // for arc4random_uniform
 
+enum ColorError : Error {
+  case unknownColorName
+}
+
 enum Color : String {
-  case white  = "\u{001B}[0;97mWhite\u{001B}[0;39m"
-  case yellow = "\u{001B}[0;33mYellow\u{001B}[0;39m"
-  case orange = "\u{001B}[0;91mOrange\u{001B}[0;39m"
-  case red    = "\u{001B}[0;31mRed\u{001B}[0;39m"
-  case pink   = "\u{001B}[0;35mPink\u{001B}[0;39m"
-  case blue   = "\u{001B}[0;34mBlue\u{001B}[0;39m"
-  case green  = "\u{001B}[0;32mGreen\u{001B}[0;39m"
-  case grey   = "\u{001B}[0;90mGrey\u{001B}[0;39m"
+  case white  = "\u{001B}[0;97m\u{25CF}\u{001B}[0;39m"
+  case yellow = "\u{001B}[0;33m\u{25CF}\u{001B}[0;39m"
+  case orange = "\u{001B}[0;91m\u{25CF}\u{001B}[0;39m"
+  case red    = "\u{001B}[0;31m\u{25CF}\u{001B}[0;39m"
+  case pink   = "\u{001B}[0;35m\u{25CF}\u{001B}[0;39m"
+  case blue   = "\u{001B}[0;34m\u{25CF}\u{001B}[0;39m"
+  case green  = "\u{001B}[0;32m\u{25CF}\u{001B}[0;39m"
+  case grey   = "\u{001B}[0;90m\u{25CF}\u{001B}[0;39m"
   
-  static var cases : [Color] = [
+  static let cases : [Color] = [
     .white, .yellow, .orange, .red, .pink, .blue, .green, .grey
   ]
   
+  static let mapping : [String:Color] = [
+    "White"  : .white,
+    "Yellow" : .yellow,
+    "Orange" : .orange,
+    "Red"    : .red,
+    "Pink"   : .pink,
+    "Blue"   : .blue,
+    "Green"  : .green,
+    "Grey"   : .grey
+  ]
+
   static func randomColor() -> Color {
     let random = Int(arc4random_uniform(8))
     return Color.cases[random]
@@ -26,8 +41,12 @@ enum Color : String {
     self = Color.cases[index]
   }
 
-  init?(_ rawValue: String) {
-    self.init(rawValue:rawValue)
+  init?(_ name: String) throws {
+    if let color = Color.mapping[name] {
+      self = color
+    } else {
+      throw ColorError.unknownColorName
+    }
   }
 }
 
@@ -41,12 +60,12 @@ struct Code : CustomStringConvertible, Equatable, Collection {
   private let parts : [Color]
 
   var description : String {
-    var d =  "Code("
+    var d = ""
     for p in parts {
-      d += "\(p.rawValue), "
+      d += "\(p.rawValue) "
     }
     let c = d.characters.count
-    return String(d.characters.prefix(c-2)) + ")"
+    return String(d.characters.prefix(c-1))
   }
 
   public init(_ parts : [Color]) throws {
@@ -107,7 +126,7 @@ extension Sequence where Self.Iterator.Element: Hashable {
   }
 }
 
-struct CodeComparison : Equatable, Hashable {
+struct CodeComparison : Equatable, Hashable, CustomStringConvertible {
   let correct   : UInt8
   let misplaced : UInt8
 
@@ -144,5 +163,17 @@ struct CodeComparison : Equatable, Hashable {
 
   var hashValue: Int {
     return Int(self.correct) * 10 + Int(self.misplaced)
+  }
+
+  var description : String {
+    if self.correct + self.misplaced < 1 { return "" }
+
+    let correctPin   = "\u{001B}[0;31m\u{25A0}\u{001B}[0;39m"
+    let misplacedPin = "\u{001B}[0;97m\u{25A0}\u{001B}[0;39m"
+
+    let d = String(repeating: correctPin   + " ", count: Int(self.correct)) +
+            String(repeating: misplacedPin + " ", count: Int(self.misplaced))
+    let c = d.characters.count
+    return String(d.characters.prefix(c-1))
   }
 }

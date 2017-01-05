@@ -4,45 +4,25 @@ A small project to dive into the Swift programming language.
 Christophe VG (<contact@christophe.vg>)  
 [https://github.com/christophevg/mastermind](https://github.com/christophevg/mastermind)
 
-## Running the solver...
-```bash
-$ time make
-Compile Swift Module 'MasterMind' (2 sources)
-Linking ./.build/debug/MasterMind
-+++ The code to crack is Code(Orange, Yellow, Pink, Orange)
->>> guess 1 Code(Blue, White, Red, Green)
-    result CodeComparison(correct: 0, misplaced: 0)
->>> only keeping with  CodeComparison(correct: 0, misplaced: 0) for Code(Blue, White, Red, Green)
-    256 remaining
->>> selecting best next guess
-    0 Code(Yellow, Yellow, Yellow, Yellow) eliminates at least 148
-    1 Code(Yellow, Yellow, Yellow, Orange) eliminates at least 205
-    6 Code(Yellow, Yellow, Orange, Pink) eliminates at least 210
->>> guess 2 Code(Yellow, Yellow, Orange, Pink)
-    result CodeComparison(correct: 1, misplaced: 2)
->>> only keeping with  CodeComparison(correct: 1, misplaced: 2) for Code(Yellow, Yellow, Orange, Pink)
-    40 remaining
->>> selecting best next guess
-    0 Code(Yellow, Orange, Yellow, Yellow) eliminates at least 27
-    1 Code(Yellow, Orange, Yellow, Orange) eliminates at least 30
-    2 Code(Yellow, Orange, Yellow, Grey) eliminates at least 32
-    3 Code(Yellow, Orange, Pink, Orange) eliminates at least 34
->>> guess 3 Code(Yellow, Orange, Pink, Orange)
-    result CodeComparison(correct: 2, misplaced: 2)
->>> only keeping with  CodeComparison(correct: 2, misplaced: 2) for Code(Yellow, Orange, Pink, Orange)
-    1 remaining
->>> selecting best next guess
-    0 Code(Orange, Yellow, Pink, Orange) eliminates at least 0
->>> guess 4 Code(Orange, Yellow, Pink, Orange)
-    result CodeComparison(correct: 4, misplaced: 0)
-+++ Cracked Code(Orange, Yellow, Pink, Orange) with CodeComparison(correct: 4, misplaced: 0)
+## Introduction
 
-real  0m5.389s
-user  0m4.260s
-sys   0m0.705s
-```
+Around Christmas 2016, our daughter got the new edition of [Mastermind](http://www.hasbro.com/nl-be/product/mastermind:93765D16-6D40-1014-8BF0-9EFBF894F9D4). Around that same time I was reading [iOS Programming Fundamentals with Swift](http://shop.oreilly.com/product/0636920055211.do). After finishing the first part on Swift, I needed a small project to get my hands dirty and try out some of that new programming language I'd been reading about.
+
+Looking across the table to the game we just gave, resulted in this repository ;-)
+
+The algorithm implemented is a slightly adapted version of the one described by [Donald Knuth](https://en.wikipedia.org/wiki/Mastermind_(board_game)#Five-guess_algorithm). I havent' really focussed on performance, but rather on getting to know language features to implement the code representation and solver in a _clean_ way.
+
+Each code consists of 4 coloured balls, chosen out of 8 possible colours. Feedback on guesses is given in the form of red and white markers, with white indicating a correct colour, but in the wrong location, and red for a correct color in the correct location.
+
+## Running the solver...
+
+Below is a screenshot of a session, in which a code is randomly chosen and then solved...
+
+![Running the solver](assets/session.gif)
 
 ## Running all unit tests
+
+To become familiar with writing unit tests in Swift, I added a few, without being exhaustive, nor thorough. 
 
 ```bash
 $ make test
