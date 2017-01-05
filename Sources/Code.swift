@@ -1,14 +1,14 @@
 import Foundation  // for arc4random_uniform
 
 enum Color : String {
-  case white  = "White"
-  case yellow = "Yellow"
-  case orange = "Orange"
-  case red    = "Red"
-  case pink   = "Pink"
-  case blue   = "Blue"
-  case green  = "Green"
-  case grey   = "Grey"
+  case white  = "\u{001B}[0;97mWhite\u{001B}[0;39m"
+  case yellow = "\u{001B}[0;33mYellow\u{001B}[0;39m"
+  case orange = "\u{001B}[0;91mOrange\u{001B}[0;39m"
+  case red    = "\u{001B}[0;31mRed\u{001B}[0;39m"
+  case pink   = "\u{001B}[0;35mPink\u{001B}[0;39m"
+  case blue   = "\u{001B}[0;34mBlue\u{001B}[0;39m"
+  case green  = "\u{001B}[0;32mGreen\u{001B}[0;39m"
+  case grey   = "\u{001B}[0;90mGrey\u{001B}[0;39m"
   
   static var cases : [Color] = [
     .white, .yellow, .orange, .red, .pink, .blue, .green, .grey
